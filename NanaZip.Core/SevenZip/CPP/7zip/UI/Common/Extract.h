@@ -17,6 +17,9 @@
 struct CExtractOptionsBase
 {
   CBoolPair ElimDup;
+// **************** NanaZip Modification Start ****************
+  CBoolPair SmartExtract;
+// **************** NanaZip Modification End ****************
 
   bool ExcludeDirItems;
   bool ExcludeFileItems;
@@ -26,9 +29,10 @@ struct CExtractOptionsBase
   NExtract::NPathMode::EEnum PathMode;
   NExtract::NOverwriteMode::EEnum OverwriteMode;
   NExtract::NZoneIdMode::EEnum ZoneMode;
+
+  CExtractNtOptions NtOptions;
   
   FString OutputDir;
-  CExtractNtOptions NtOptions;
   UString HashDir;
 
   CExtractOptionsBase():

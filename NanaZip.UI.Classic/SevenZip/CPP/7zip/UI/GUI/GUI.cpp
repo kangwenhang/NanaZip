@@ -25,6 +25,7 @@
 
 #include "../FileManager/StringUtils.h"
 #include "../FileManager/MyWindowsNew.h"
+#include "../FileManager/RegistryUtils.h"
 
 #include "BenchmarkDialog.h"
 #include "ExtractGUI.h"
@@ -300,8 +301,14 @@ static int Main2()
         return NExitCode::kFatalError;
       throw CSystemException(result);
     }
+    // **************** NanaZip Modification Start ****************
+    else if (WantOpenFolderAfterExtract()) {
+        ShellExecuteW(NULL, NULL, eo.OutputDir, NULL, NULL, SW_SHOWNORMAL);
+    }
+    // **************** NanaZip Modification End ****************
     if (!ecs->IsOK())
       return NExitCode::kFatalError;
+    
   }
   else if (options.Command.IsFromUpdateGroup())
   {
@@ -382,6 +389,8 @@ static int Main2()
 #define NT_CHECK_FAIL_ACTION ErrorMessage("Unsupported Windows version"); return NExitCode::kFatalError;
 #endif
 
+#include <NanaZip.Frieren.h>
+
 int APIENTRY WinMain(HINSTANCE  hInstance, HINSTANCE /* hPrevInstance */,
   #ifdef UNDER_CE
   LPWSTR
@@ -395,6 +404,8 @@ int APIENTRY WinMain(HINSTANCE  hInstance, HINSTANCE /* hPrevInstance */,
   #ifdef _WIN32
   NT_CHECK
   #endif
+
+  ::NanaZipFrierenGlobalInitialize();
 
   if (!::NanaZipEnableMitigations())
   {

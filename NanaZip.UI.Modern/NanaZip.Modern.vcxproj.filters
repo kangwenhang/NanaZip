@@ -4,9 +4,6 @@
     <Filter Include="Assets">
       <UniqueIdentifier>{768d4162-5afd-46ef-9aa1-8a652a1018c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\Toolbar">
-      <UniqueIdentifier>{8e11afaf-a6e1-4ec6-92f1-db273897ef74}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SevenZip">
       <UniqueIdentifier>{736c445c-e291-48fb-9e1e-417ac64d388d}</UniqueIdentifier>
     </Filter>
@@ -70,53 +67,23 @@
     <Filter Include="SevenZip\Windows\Control">
       <UniqueIdentifier>{7129b3d3-8d4d-44d1-a771-d6314d17e0a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AboutDialog">
-      <UniqueIdentifier>{c8bf1ac8-1083-46a5-aa52-bcd9e29c6b69}</UniqueIdentifier>
+    <Filter Include="Strings">
+      <UniqueIdentifier>{92aa704d-4b05-48dd-ae91-5d2e02a11c6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strings\en">
+      <UniqueIdentifier>{a5210684-7934-4d34-94b0-f9ef3ae5c2f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strings\zh-Hans">
+      <UniqueIdentifier>{0237aed3-2eca-4267-a2e7-4c9e8e2f37f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strings\pl">
+      <UniqueIdentifier>{41dcb6ac-4f56-4e58-9e96-f4337ba4619a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Strings\pt-BR">
+      <UniqueIdentifier>{448c6906-c923-4673-8ff3-5af434e99f42}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\Toolbar\Add_24x24.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Add_32x32.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Copy_24x24.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Copy_32x32.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Delete_24x24.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Delete_32x32.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Extract_24x24.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Extract_32x32.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Info_24x24.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Info_32x32.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Move_24x24.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Move_32x32.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Test_24x24.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
-    <Image Include="Assets\Toolbar\Test_32x32.bmp">
-      <Filter>Assets\Toolbar</Filter>
-    </Image>
     <Image Include="Assets\ParentFolder.bmp">
       <Filter>Assets</Filter>
     </Image>
@@ -566,11 +533,9 @@
     <ClCompile Include="SevenZip\CPP\Common\DynLimBuf.cpp">
       <Filter>SevenZip\Common</Filter>
     </ClCompile>
-    <ClCompile Include="AboutDialog.cpp">
-      <Filter>AboutDialog</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="NanaZip.UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SevenZip\CPP\7zip\UI\FileManager\MyWindowsNew.h">
@@ -1089,10 +1054,8 @@
     <ClInclude Include="SevenZip\CPP\Common\DynLimBuf.h">
       <Filter>SevenZip\Common</Filter>
     </ClInclude>
-    <ClInclude Include="AboutDialog.h">
-      <Filter>AboutDialog</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="NanaZip.UI.h" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="NanaZip.Modern.manifest" />
@@ -1107,5 +1070,33 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="AboutPage.xaml" />
+    <Page Include="MainWindowToolBarPage.xaml" />
+    <Page Include="SponsorPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\en\MainWindowToolBarPage.resw">
+      <Filter>Strings\en</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\zh-Hans\MainWindowToolBarPage.resw">
+      <Filter>Strings\zh-Hans</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\en\SponsorPage.resw">
+      <Filter>Strings\en</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\zh-Hans\SponsorPage.resw">
+      <Filter>Strings\zh-Hans</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\pl\SponsorPage.resw">
+      <Filter>Strings\pl</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\pl\MainWindowToolBarPage.resw">
+      <Filter>Strings\pl</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\pt-BR\MainWindowToolBarPage.resw">
+      <Filter>Strings\pt-BR</Filter>
+    </PRIResource>
+    <PRIResource Include="Strings\pt-BR\SponsorPage.resw">
+      <Filter>Strings\pt-BR</Filter>
+    </PRIResource>
   </ItemGroup>
 </Project>

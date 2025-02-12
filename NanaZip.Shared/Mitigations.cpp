@@ -15,8 +15,14 @@
 
 #include <Detours.h>
 
+#include <atomic>
+
 namespace
 {
+#ifdef NDEBUG
+    static std::atomic<decltype(::SetThreadInformation)*> SetThreadInformationPtr = nullptr;
+#endif
+
     static HMODULE GetKernel32ModuleHandle()
     {
         static HMODULE CachedResult = ::GetModuleHandleW(L"kernel32.dll");
@@ -53,49 +59,19 @@ namespace
             dwLength);
     }
 
-    static BOOL SetThreadInformationWrapper(
-        _In_ HANDLE hThread,
-        _In_ THREAD_INFORMATION_CLASS ThreadInformationClass,
-        _In_ LPVOID ThreadInformation,
-        _In_ DWORD ThreadInformationSize)
-    {
-        static FARPROC CachedProcAddress = ([]() -> FARPROC
-        {
-            HMODULE ModuleHandle = ::GetKernel32ModuleHandle();
-            if (ModuleHandle)
-            {
-                return ::GetProcAddress(
-                    ModuleHandle,
-                    "SetThreadInformation");
-            }
-            return nullptr;
-        }());
-
-        if (!CachedProcAddress)
-        {
-            return FALSE;
-        }
-
-        using ProcType = decltype(::SetThreadInformation)*;
-
-        return reinterpret_cast<ProcType>(CachedProcAddress)(
-            hThread,
-            ThreadInformationClass,
-            ThreadInformation,
-            ThreadInformationSize);
-    }
-
     static bool IsWindows8OrLater()
     {
         static bool CachedResult = ::MileIsWindowsVersionAtLeast(6, 2, 0);
         return CachedResult;
     }
 
+#ifdef NDEBUG
     static bool IsWindows8Point1OrLater()
     {
         static bool CachedResult = ::MileIsWindowsVersionAtLeast(6, 3, 0);
         return CachedResult;
     }
+#endif
 
     static bool IsWindows10OrLater()
     {
@@ -143,6 +119,18 @@ EXTERN_C BOOL WINAPI NanaZipEnableMitigations()
         {
             return FALSE;
         }
+
+        HMODULE ModuleHandle = ::GetKernel32ModuleHandle();
+        if (ModuleHandle)
+        {
+            using ProcType = decltype(::SetThreadInformation)*;
+            FARPROC ProcAddress = ::GetProcAddress(
+                ModuleHandle,
+                "SetThreadInformation");
+            SetThreadInformationPtr.store(
+                reinterpret_cast<ProcType>(ProcAddress),
+                std::memory_order_relaxed);
+        }
     }
 #endif // NDEBUG
 
@@ -161,21 +149,6 @@ EXTERN_C BOOL WINAPI NanaZipEnableMitigations()
     }
 
     return TRUE;
-}
-
-EXTERN_C BOOL WINAPI NanaZipThreadDynamicCodeAllow()
-{
-    if (!::IsWindows8Point1OrLater())
-    {
-        return TRUE;
-    }
-
-    DWORD ThreadPolicy = THREAD_DYNAMIC_CODE_ALLOW;
-    return ::SetThreadInformationWrapper(
-        ::GetCurrentThread(),
-        ThreadDynamicCodePolicy,
-        &ThreadPolicy,
-        sizeof(DWORD));
 }
 
 EXTERN_C BOOL WINAPI NanaZipDisableChildProcesses()
@@ -197,3 +170,32 @@ EXTERN_C BOOL WINAPI NanaZipDisableChildProcesses()
 
     return TRUE;
 }
+
+#ifdef NDEBUG
+
+EXTERN_C BOOL WINAPI NanaZipSetThreadDynamicCodeOptout(BOOL optout)
+{
+    using ProcType = decltype(::SetThreadInformation)*;
+    ProcType SetThreadInformationWrapper = SetThreadInformationPtr.load(std::memory_order_relaxed);
+    if (SetThreadInformationWrapper) {
+        DWORD ThreadPolicy = optout ? THREAD_DYNAMIC_CODE_ALLOW : 0;
+        return SetThreadInformationWrapper(
+            ::GetCurrentThread(),
+            ThreadDynamicCodePolicy,
+            &ThreadPolicy,
+            sizeof(DWORD));
+    }
+    else {
+        return TRUE;
+    }
+}
+
+#else
+
+EXTERN_C BOOL WINAPI NanaZipSetThreadDynamicCodeOptout(BOOL optout)
+{
+    UNREFERENCED_PARAMETER(optout);
+    return TRUE;
+}
+
+#endif

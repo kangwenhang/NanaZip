@@ -4,8 +4,8 @@
     <ProjectGuid>{89B81A5B-FF0D-4193-9CB1-738692775DD2}</ProjectGuid>
     <RootNamespace>NanaZip.Codecs</RootNamespace>
     <MileProjectType>DynamicLibrary</MileProjectType>
-    <MileProjectEnableVCLTLSupport>true</MileProjectEnableVCLTLSupport>
-    <MileProjectEnableCppWinRTSupport>true</MileProjectEnableCppWinRTSupport>
+    <WindowsTargetPlatformMinVersion>10.0.19041.0</WindowsTargetPlatformMinVersion>
+    <MileUniCrtDisableRuntimeDebuggingFeature>true</MileUniCrtDisableRuntimeDebuggingFeature>
     <MileProjectUseProjectProperties>true</MileProjectUseProjectProperties>
     <MileProjectCompanyName>M2-Team</MileProjectCompanyName>
     <MileProjectFileDescription>NanaZip Codecs</MileProjectFileDescription>
@@ -13,14 +13,16 @@
     <MileProjectLegalCopyright>© M2-Team and Contributors. All rights reserved.</MileProjectLegalCopyright>
     <MileProjectOriginalFilename>NanaZip.Codecs.dll</MileProjectOriginalFilename>
     <MileProjectProductName>NanaZip</MileProjectProductName>
-    <MileProjectVersion>3.0.$([System.DateTime]::Today.Subtract($([System.DateTime]::Parse('2021-08-31'))).TotalDays).0</MileProjectVersion>
-    <MileProjectVersionTag>Preview 1</MileProjectVersionTag>
+    <MileProjectVersion>5.1.$([System.DateTime]::Today.Subtract($([System.DateTime]::Parse('2021-08-31'))).TotalDays).0</MileProjectVersion>
+    <MileProjectVersionTag>Preview 0</MileProjectVersionTag>
+    <MileWindowsHelpersNoCppWinRTHelpers>true</MileWindowsHelpersNoCppWinRTHelpers>
   </PropertyGroup>
   <Import Project="..\Mile.Project.Windows\Mile.Project.Platform.x86.props" />
   <Import Project="..\Mile.Project.Windows\Mile.Project.Platform.x64.props" />
   <Import Project="..\Mile.Project.Windows\Mile.Project.Platform.ARM64.props" />
   <Import Project="..\Mile.Project.Windows\Mile.Project.Cpp.Default.props" />
   <Import Project="..\Mile.Project.Windows\Mile.Project.Cpp.props" />
+  <Import Project="..\K7Pal\K7Pal.props" />
   <Import Project="..\NanaZip.Specification\NanaZip.Specification.props" />
   <PropertyGroup>
     <IncludePath>$(MSBuildThisFileDirectory)BLAKE3\;$(IncludePath)</IncludePath>
@@ -33,23 +35,94 @@
     <IncludePath>$(MSBuildThisFileDirectory)LZ5\;$(IncludePath)</IncludePath>
     <IncludePath>$(MSBuildThisFileDirectory)RHash\;$(IncludePath)</IncludePath>
     <IncludePath>$(MSBuildThisFileDirectory)xxHash\;$(IncludePath)</IncludePath>
+    <IncludePath>$(MSBuildThisFileDirectory)Zstandard\;$(IncludePath)</IncludePath>
     <IncludePath>$(MSBuildThisFileDirectory)ZSTDMT\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <EnableEnhancedInstructionSet Condition="'$(Platform)'=='Win32'">NoExtensions</EnableEnhancedInstructionSet>
-      <PreprocessorDefinitions>NO_XXHASH;FL2_7ZIP_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NO_XXHASH;FL2_7ZIP_BUILD;ZSTD_MULTITHREAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>NanaZip.Codecs.def</ModuleDefinitionFile>
-      <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <RuntimeLibrary Condition="'$(Configuration)' == 'Debug'">MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary Condition="'$(Configuration)' == 'Release'">MultiThreaded</RuntimeLibrary>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="NanaZip.Codecs.def" />
     <None Include="NanaZip.Codecs.props" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NanaZip.Codecs.Archive.DotNetSingleFile.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Archive.ElectronAsar.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Archive.Littlefs.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Archive.Romfs.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Archive.Ufs.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Archive.WebAssembly.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Archive.Zealfs.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Aich.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.BCryptProvider.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Blake2b.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Blake3.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Ed2k.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.EdonR224.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.EdonR256.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.EdonR384.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.EdonR512.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Gost12256.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Gost12512.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Gost94.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Gost94CryptoPro.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Has160.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Ripemd160.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Sha224.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Sha3224.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Sha3256.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Sha3384.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Sha3512.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Sm3.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Snefru128.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Snefru256.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Tiger.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Tiger2.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Torrent.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Tth.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Whirlpool.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Xxh3128.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Xxh32.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Xxh364.cpp" />
+    <ClCompile Include="NanaZip.Codecs.Hash.Xxh64.cpp" />
+    <ClCompile Include="NanaZip.Codecs.MultiThreadWrapper.Brotli.cpp" />
+    <ClCompile Include="NanaZip.Codecs.MultiThreadWrapper.Common.cpp" />
+    <ClCompile Include="NanaZip.Codecs.MultiThreadWrapper.Lizard.cpp" />
+    <ClCompile Include="NanaZip.Codecs.MultiThreadWrapper.LZ4.cpp" />
+    <ClCompile Include="NanaZip.Codecs.MultiThreadWrapper.LZ5.cpp" />
+    <ClCompile Include="NanaZip.Codecs.SevenZipWrapper.cpp" />
+    <ClCompile Include="Zstandard\common\debug.c" />
+    <ClCompile Include="Zstandard\common\entropy_common.c" />
+    <ClCompile Include="Zstandard\common\error_private.c" />
+    <ClCompile Include="Zstandard\common\fse_decompress.c" />
+    <ClCompile Include="Zstandard\common\pool.c" />
+    <ClCompile Include="Zstandard\common\threading.c" />
+    <ClCompile Include="Zstandard\common\zstd_common.c" />
+    <ClCompile Include="Zstandard\compress\fse_compress.c" />
+    <ClCompile Include="Zstandard\compress\hist.c" />
+    <ClCompile Include="Zstandard\compress\huf_compress.c" />
+    <ClCompile Include="Zstandard\compress\zstdmt_compress.c" />
+    <ClCompile Include="Zstandard\compress\zstd_compress.c" />
+    <ClCompile Include="Zstandard\compress\zstd_compress_literals.c" />
+    <ClCompile Include="Zstandard\compress\zstd_compress_sequences.c" />
+    <ClCompile Include="Zstandard\compress\zstd_compress_superblock.c" />
+    <ClCompile Include="Zstandard\compress\zstd_double_fast.c" />
+    <ClCompile Include="Zstandard\compress\zstd_fast.c" />
+    <ClCompile Include="Zstandard\compress\zstd_lazy.c" />
+    <ClCompile Include="Zstandard\compress\zstd_ldm.c" />
+    <ClCompile Include="Zstandard\compress\zstd_opt.c" />
     <ClCompile Include="FastLZMA2\dict_buffer.c" />
     <ClCompile Include="FastLZMA2\fl2_common.c" />
     <ClCompile Include="FastLZMA2\fl2_compress.c" />
@@ -151,7 +224,6 @@
     <ClCompile Include="RHash\byte_order.c">
       <DisableSpecificWarnings>4146;</DisableSpecificWarnings>
     </ClCompile>
-    <ClCompile Include="RHash\ed2k.c" />
     <ClCompile Include="RHash\edonr.c" />
     <ClCompile Include="RHash\gost12.c">
       <DisableSpecificWarnings>4267;</DisableSpecificWarnings>
@@ -159,14 +231,10 @@
     <ClCompile Include="RHash\gost94.c" />
     <ClCompile Include="RHash\has160.c" />
     <ClCompile Include="RHash\hex.c" />
-    <ClCompile Include="RHash\md4.c" />
-    <ClCompile Include="RHash\md5.c" />
-    <ClCompile Include="RHash\rhash_sha1.c" />
     <ClCompile Include="RHash\rhash_sha256.c" />
     <ClCompile Include="RHash\rhash_util.c" />
     <ClCompile Include="RHash\ripemd-160.c" />
     <ClCompile Include="RHash\sha3.c" />
-    <ClCompile Include="RHash\sha512.c" />
     <ClCompile Include="RHash\snefru.c">
       <DisableSpecificWarnings>4127;</DisableSpecificWarnings>
     </ClCompile>
@@ -178,25 +246,64 @@
     <ClCompile Include="RHash\tth.c" />
     <ClCompile Include="RHash\whirlpool.c" />
     <ClCompile Include="RHash\whirlpool_sbox.c" />
-    <ClCompile Include="Heimdal\md2.c">
-      <DisableSpecificWarnings>4267;</DisableSpecificWarnings>
-    </ClCompile>
     <ClCompile Include="GmSSL\sm3.c" />
     <ClCompile Include="BLAKE3\blake3.c">
       <DisableSpecificWarnings>4244;</DisableSpecificWarnings>
     </ClCompile>
-    <ClCompile Include="BLAKE3\blake3_avx2.c" />
-    <ClCompile Include="BLAKE3\blake3_avx512.c" />
+    <None Include="BLAKE3\blake3_avx2.c" />
+    <None Include="BLAKE3\blake3_avx512.c" />
     <ClCompile Include="BLAKE3\blake3_dispatch.c">
-      <DisableSpecificWarnings>4702;</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4189;4702;</DisableSpecificWarnings>
     </ClCompile>
-    <ClCompile Include="BLAKE3\blake3_neon.c" />
+    <None Include="BLAKE3\blake3_neon.c" />
     <ClCompile Include="BLAKE3\blake3_portable.c" />
-    <ClCompile Include="BLAKE3\blake3_sse2.c" />
-    <ClCompile Include="BLAKE3\blake3_sse41.c" />
+    <None Include="BLAKE3\blake3_sse2.c" />
+    <None Include="BLAKE3\blake3_sse41.c" />
     <ClCompile Include="NanaZip.Codecs.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FreeBSD\dinode.h" />
+    <ClInclude Include="FreeBSD\dir.h" />
+    <ClInclude Include="FreeBSD\fs.h" />
+    <ClInclude Include="NanaZip.Codecs.h" />
+    <ClInclude Include="NanaZip.Codecs.MultiThreadWrapper.Brotli.h" />
+    <ClInclude Include="NanaZip.Codecs.MultiThreadWrapper.Common.h" />
+    <ClInclude Include="NanaZip.Codecs.MultiThreadWrapper.Lizard.h" />
+    <ClInclude Include="NanaZip.Codecs.MultiThreadWrapper.LZ4.h" />
+    <ClInclude Include="NanaZip.Codecs.MultiThreadWrapper.LZ5.h" />
+    <ClInclude Include="NanaZip.Codecs.SevenZipWrapper.h" />
+    <ClInclude Include="Zstandard\common\allocations.h" />
+    <ClInclude Include="Zstandard\common\bits.h" />
+    <ClInclude Include="Zstandard\common\bitstream.h" />
+    <ClInclude Include="Zstandard\common\compiler.h" />
+    <ClInclude Include="Zstandard\common\cpu.h" />
+    <ClInclude Include="Zstandard\common\debug.h" />
+    <ClInclude Include="Zstandard\common\error_private.h" />
+    <ClInclude Include="Zstandard\common\fse.h" />
+    <ClInclude Include="Zstandard\common\huf.h" />
+    <ClInclude Include="Zstandard\common\mem.h" />
+    <ClInclude Include="Zstandard\common\pool.h" />
+    <ClInclude Include="Zstandard\common\portability_macros.h" />
+    <ClInclude Include="Zstandard\common\threading.h" />
+    <ClInclude Include="Zstandard\common\zstd_deps.h" />
+    <ClInclude Include="Zstandard\common\zstd_internal.h" />
+    <ClInclude Include="Zstandard\common\zstd_trace.h" />
+    <ClInclude Include="Zstandard\compress\clevels.h" />
+    <ClInclude Include="Zstandard\compress\hist.h" />
+    <ClInclude Include="Zstandard\compress\zstdmt_compress.h" />
+    <ClInclude Include="Zstandard\compress\zstd_compress_internal.h" />
+    <ClInclude Include="Zstandard\compress\zstd_compress_literals.h" />
+    <ClInclude Include="Zstandard\compress\zstd_compress_sequences.h" />
+    <ClInclude Include="Zstandard\compress\zstd_compress_superblock.h" />
+    <ClInclude Include="Zstandard\compress\zstd_cwksp.h" />
+    <ClInclude Include="Zstandard\compress\zstd_double_fast.h" />
+    <ClInclude Include="Zstandard\compress\zstd_fast.h" />
+    <ClInclude Include="Zstandard\compress\zstd_lazy.h" />
+    <ClInclude Include="Zstandard\compress\zstd_ldm.h" />
+    <ClInclude Include="Zstandard\compress\zstd_ldm_geartab.h" />
+    <ClInclude Include="Zstandard\compress\zstd_opt.h" />
+    <ClInclude Include="Zstandard\zstd.h" />
+    <ClInclude Include="Zstandard\zstd_errors.h" />
     <ClInclude Include="FastLZMA2\atomic.h" />
     <ClInclude Include="FastLZMA2\compiler.h" />
     <ClInclude Include="FastLZMA2\count.h" />
@@ -322,19 +429,15 @@
     <ClInclude Include="RHash\aich.h" />
     <ClInclude Include="RHash\blake2b.h" />
     <ClInclude Include="RHash\byte_order.h" />
-    <ClInclude Include="RHash\ed2k.h" />
     <ClInclude Include="RHash\edonr.h" />
     <ClInclude Include="RHash\gost12.h" />
     <ClInclude Include="RHash\gost94.h" />
     <ClInclude Include="RHash\has160.h" />
     <ClInclude Include="RHash\hex.h" />
-    <ClInclude Include="RHash\md4.h" />
-    <ClInclude Include="RHash\md5.h" />
     <ClInclude Include="RHash\ripemd-160.h" />
     <ClInclude Include="RHash\sha1.h" />
     <ClInclude Include="RHash\sha256.h" />
     <ClInclude Include="RHash\sha3.h" />
-    <ClInclude Include="RHash\sha512.h" />
     <ClInclude Include="RHash\snefru.h" />
     <ClInclude Include="RHash\tiger.h" />
     <ClInclude Include="RHash\torrent.h" />
@@ -342,11 +445,32 @@
     <ClInclude Include="RHash\ustd.h" />
     <ClInclude Include="RHash\util.h" />
     <ClInclude Include="RHash\whirlpool.h" />
-    <ClInclude Include="Heimdal\md2.h" />
     <ClInclude Include="GmSSL\endian.h" />
     <ClInclude Include="GmSSL\sm3.h" />
     <ClInclude Include="BLAKE3\blake3.h" />
     <ClInclude Include="BLAKE3\blake3_impl.h" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Mile.Windows.Helpers">
+      <Version>1.0.671</Version>
+    </PackageReference>
+    <PackageReference Include="Mile.Windows.UniCrt">
+      <Version>1.2.328</Version>
+    </PackageReference>
+    <PackageReference Include="Mile.Json">
+      <Version>1.0.659</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="..\Mile.Project.Windows\Mile.Project.Cpp.targets" />
+  <Target Name="NanaZipCodecsBlake3BuildCSource" BeforeTargets="BeforeClCompile">
+    <ItemGroup Condition="('$(Platform)'=='Win32') Or ('$(Platform)'=='x64')">
+      <ClCompile Include="BLAKE3\blake3_avx2.c" />
+      <ClCompile Include="BLAKE3\blake3_avx512.c" />
+      <ClCompile Include="BLAKE3\blake3_sse2.c" />
+      <ClCompile Include="BLAKE3\blake3_sse41.c" />
+    </ItemGroup>
+    <ItemGroup Condition="('$(Platform)'!='Win32') And ('$(Platform)'!='x64')">
+      <ClCompile Include="BLAKE3\blake3_neon.c" />
+    </ItemGroup>
+  </Target>
 </Project>

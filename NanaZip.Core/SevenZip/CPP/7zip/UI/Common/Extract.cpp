@@ -2,8 +2,6 @@
 
 #include "StdAfx.h"
 
-#include "../../../../C/Sort.h"
-
 #include "../../../Common/StringConvert.h"
 
 #include "../../../Windows/FileDir.h"
@@ -157,7 +155,30 @@ static HRESULT DecompressArchive(
 
       realIndices.Add(i);
     }
-    
+
+    // **************** NanaZip Modification Start ****************
+    if (options.SmartExtract.Val)
+    {
+      UInt32 firstLevelCount = 0;
+      for (UInt32 i = 0; i < numItems; i++)
+      {
+        RINOK(arc.GetItem(i, item));
+        const UString &path =
+          #ifdef SUPPORT_ALT_STREAMS
+            item.MainPath;
+          #else
+            item.Path;
+          #endif
+        if (path.Find(L'/') == -1 && path.Find(L'\\') == -1)
+          firstLevelCount++;
+        if (firstLevelCount > 1)
+          break;
+      }
+      if (firstLevelCount > 1)
+        outDir += replaceName;
+    }
+    // **************** NanaZip Modification End ****************
+
     if (realIndices.Size() == 0)
     {
       callback->ThereAreNoFiles();
@@ -201,6 +222,8 @@ static HRESULT DecompressArchive(
       removePathParts, false,
       packSize);
 
+  ecs->Is_elimPrefix_Mode = elimIsPossible;
+
   
   #ifdef SUPPORT_LINKS
   
@@ -227,7 +250,13 @@ static HRESULT DecompressArchive(
       ConvertPropVariantToUInt64(prop, stdInProcessed);
   }
   else
-    result = archive->Extract(&realIndices.Front(), realIndices.Size(), testMode, ecs);
+  {
+    // v23.02: we reset completed value that could be set by Open() operation
+    IArchiveExtractCallback *aec = ecs;
+    const UInt64 val = 0;
+    RINOK(aec->SetCompleted(&val))
+    result = archive->Extract(realIndices.ConstData(), realIndices.Size(), testMode, aec);
+  }
   
   const HRESULT res2 = ecsCloser.Close();
   if (result == S_OK)
@@ -349,11 +378,10 @@ HRESULT Extract(
     if (options.StdInMode)
     {
       // do we need ctime and mtime?
-      fi.ClearBase();
-      fi.Size = 0; // (UInt64)(Int64)-1;
-      fi.SetAsFile();
-      // NTime::GetCurUtc_FiTime(fi.MTime);
-      // fi.CTime = fi.ATime = fi.MTime;
+      // fi.ClearBase();
+      // fi.Size = 0; // (UInt64)(Int64)-1;
+      if (!fi.SetAs_StdInFile())
+        return GetLastError_noZero_HRESULT();
     }
     else
     {

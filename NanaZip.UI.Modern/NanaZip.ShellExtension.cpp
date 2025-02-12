@@ -180,6 +180,7 @@ namespace NanaZip::ShellExtension
 
             Extract,
             ExtractHere,
+            ExtractHereSmart,
             ExtractTo,
 
             Compress,
@@ -442,6 +443,7 @@ namespace NanaZip::ShellExtension
             }
             case CommandID::Extract:
             case CommandID::ExtractHere:
+            case CommandID::ExtractHereSmart:
             case CommandID::ExtractTo:
             {
                 if (!NeedExtract)
@@ -450,7 +452,8 @@ namespace NanaZip::ShellExtension
                 }
 
                 std::wstring Folder = BaseFolder;
-                if (this->m_CommandID != CommandID::ExtractHere)
+                if (this->m_CommandID != CommandID::ExtractHere &&
+                    this->m_CommandID != CommandID::ExtractHereSmart)
                 {
                     Folder += SpecFolder;
                 }
@@ -461,7 +464,8 @@ namespace NanaZip::ShellExtension
                     (this->m_CommandID == CommandID::Extract),
                     ((this->m_CommandID == CommandID::ExtractTo)
                     && this->m_ElimDup.Val),
-                    this->m_WriteZone);
+                    this->m_WriteZone,
+                    (this->m_CommandID == CommandID::ExtractHereSmart));
 
                 break;
             }
@@ -765,6 +769,20 @@ namespace NanaZip::ShellExtension
                             ContextMenuWriteZone));
                 }
 
+                if (ContextMenuFlags & NContextMenuFlags::kExtractHereSmart)
+                {
+                    UString TranslatedString;
+                    LangString(IDS_CONTEXT_EXTRACT_HERE_SMART, TranslatedString);
+                    this->m_SubCommands.push_back(
+                        winrt::make<ExplorerCommandBase>(
+                            std::wstring(
+                                TranslatedString.Ptr(),
+                                TranslatedString.Len()),
+                            CommandID::ExtractHereSmart,
+                            ContextMenuElimDup,
+                            ContextMenuWriteZone));
+                }
+
                 if (ContextMenuFlags & NContextMenuFlags::kExtractTo)
                 {
                     UString TranslatedString;
@@ -1006,9 +1024,9 @@ namespace NanaZip::ShellExtension
                 (this->m_CurrentSubCommand != this->m_SubCommands.cend());
                 ++i)
             {
-                this->m_CurrentSubCommand->copy_to(&pUICommand[0]);
-                ++this->m_CurrentSubCommand;
+                this->m_CurrentSubCommand->copy_to(&pUICommand[i]);
                 ++Fetched;
+                ++this->m_CurrentSubCommand;
             }
 
             if (pceltFetched)

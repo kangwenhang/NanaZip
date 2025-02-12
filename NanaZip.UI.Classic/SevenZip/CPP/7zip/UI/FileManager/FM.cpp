@@ -9,6 +9,7 @@
 #include "../../../../C/Alloc.h"
 #ifdef _WIN32
 #include "../../../../C/DllSecur.h"
+#include "DllBlock.h"
 #include "Mitigations.h"
 #endif
 
@@ -662,6 +663,8 @@ static int WINAPI WinMain2(int nCmdShow)
   return (int)msg.wParam;
 }
 
+#include <NanaZip.Frieren.h>
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
     #ifdef UNDER_CE
     LPWSTR
@@ -672,16 +675,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
 {
   g_hInstance = hInstance;
 
+  ::NanaZipFrierenGlobalInitialize();
+
+  if (!::NanaZipBlockDlls())
+  {
+    ErrorMessage("Cannot block DLL loading");
+  }
   if (!::NanaZipEnableMitigations())
   {
     ErrorMessage("Cannot enable security mitigations");
   }
-
-#ifdef NDEBUG
-  // opt out of dynamic code policy on UI thread to prevent Explorer extension incompatibility
-  // ignore errors since they shouldn't be fatal
-  ::NanaZipThreadDynamicCodeAllow();
-#endif
 
   try
   {
@@ -969,6 +972,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         g_Splitter.SetPos(hWnd, g_SplitterPos );
         g_CanChangeSplitter = true;
       }
+
+      // fix status bar on resize
+      g_App.Refresh_StatusBar();
 
       g_Maximized = (wParam == SIZE_MAXIMIZED) || (wParam == SIZE_MAXSHOW);
 

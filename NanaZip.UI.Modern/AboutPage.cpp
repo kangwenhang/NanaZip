@@ -4,6 +4,10 @@
 #include "AboutPage.g.cpp"
 #endif
 
+#include "NanaZip.UI.h"
+
+#include <winrt/Windows.UI.Xaml.Documents.h>
+
 #include <string>
 
 #include "../SevenZip/CPP/Common/Common.h"
@@ -24,9 +28,16 @@ extern CCodecs* g_CodecsObj;
 
 namespace winrt::NanaZip::Modern::implementation
 {
-    AboutPage::AboutPage()
+    AboutPage::AboutPage(
+        _In_ HWND WindowHandle) :
+        m_WindowHandle(WindowHandle)
     {
-        InitializeComponent();
+
+    }
+
+    void AboutPage::InitializeComponent()
+    {
+        AboutPageT::InitializeComponent();
 
         std::wstring Title = std::wstring(
             ::LangString(IDD_ABOUT));
@@ -34,6 +45,9 @@ namespace winrt::NanaZip::Modern::implementation
         {
             Title = L"About NanaZip";
         }
+        ::SetWindowTextW(
+            this->m_WindowHandle,
+            Title.c_str());
 
         std::wstring Version = std::wstring(
             "NanaZip " MILE_PROJECT_VERSION_STRING);
@@ -61,8 +75,36 @@ namespace winrt::NanaZip::Modern::implementation
         }
 #endif
 
-        this->Title().Text(Title);
+        this->GridTitleTextBlock().Text(Title);
         this->Version().Text(Version);
         this->Content().Text(Content);
+        this->CancelButton().Content(winrt::box_value(
+            Mile::WinRT::GetLocalizedString(
+                L"Legacy/Resource402")));
+    }
+
+    void AboutPage::GitHubButtonClick(
+        winrt::IInspectable const& sender,
+        winrt::RoutedEventArgs const& e)
+    {
+        UNREFERENCED_PARAMETER(sender);
+        UNREFERENCED_PARAMETER(e);
+
+        SHELLEXECUTEINFOW ExecInfo = { 0 };
+        ExecInfo.cbSize = sizeof(SHELLEXECUTEINFOW);
+        ExecInfo.lpVerb = L"open";
+        ExecInfo.lpFile = L"https://github.com/M2Team/NanaZip";
+        ExecInfo.nShow = SW_SHOWNORMAL;
+        ::ShellExecuteExW(&ExecInfo);
+    }
+
+    void AboutPage::CancelButtonClick(
+        winrt::IInspectable const& sender,
+        winrt::RoutedEventArgs const& e)
+    {
+        UNREFERENCED_PARAMETER(sender);
+        UNREFERENCED_PARAMETER(e);
+
+        ::DestroyWindow(this->m_WindowHandle);
     }
 }

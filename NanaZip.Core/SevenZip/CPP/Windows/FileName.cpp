@@ -278,12 +278,14 @@ bool IsAbsolutePath(const wchar_t *s) throw()
 int FindAltStreamColon(CFSTR path) throw()
 {
   unsigned i = 0;
-  if (IsDrivePath2(path))
-    i = 2;
+  if (IsSuperPath(path))
+    i = kSuperPathPrefixSize;
+  if (IsDrivePath2(path + i))
+    i += 2;
   int colonPos = -1;
   for (;; i++)
   {
-    FChar c = path[i];
+    const FChar c = path[i];
     if (c == 0)
       return colonPos;
     if (c == ':')
@@ -302,13 +304,13 @@ int FindAltStreamColon(CFSTR path) throw()
 static unsigned GetRootPrefixSize_Of_NetworkPath(CFSTR s)
 {
   // Network path: we look "server\path\" as root prefix
-  int pos = FindSepar(s);
+  const int pos = FindSepar(s);
   if (pos < 0)
     return 0;
-  int pos2 = FindSepar(s + (unsigned)pos + 1);
+  const int pos2 = FindSepar(s + (unsigned)pos + 1);
   if (pos2 < 0)
     return 0;
-  return pos + pos2 + 2;
+  return (unsigned)pos + (unsigned)pos2 + 2;
 }
 
 static unsigned GetRootPrefixSize_Of_SimplePath(CFSTR s)
@@ -334,7 +336,7 @@ static unsigned GetRootPrefixSize_Of_SuperPath(CFSTR s)
   const int pos = FindSepar(s + kSuperPathPrefixSize);
   if (pos < 0)
     return 0;
-  return kSuperPathPrefixSize + pos + 1;
+  return kSuperPathPrefixSize + (unsigned)pos + 1;
 }
 
 unsigned GetRootPrefixSize(CFSTR s) throw()

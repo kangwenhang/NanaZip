@@ -241,16 +241,16 @@
     <value>Llyfrnod</value>
   </data>
   <data name="Resource900" xml:space="preserve">
-    <value>&amp;Dewisiadau...</value>
+    <value>Dewisiadau...</value>
   </data>
   <data name="Resource901" xml:space="preserve">
-    <value>&amp;Meincnod</value>
+    <value>Meincnod</value>
   </data>
   <data name="Resource960" xml:space="preserve">
     <value>&amp;Cynnwys...</value>
   </data>
   <data name="Resource961" xml:space="preserve">
-    <value>&amp;Manylion NanaZip...</value>
+    <value>Manylion NanaZip...</value>
   </data>
   <data name="Resource1003" xml:space="preserve">
     <value>Llwybr</value>
@@ -470,10 +470,6 @@
   </data>
   <data name="Resource2901" xml:space="preserve">
     <value>Mae NanaZip yn meddalwedd am ddim. Ond, gallwch cefnogi yNanaZip</value>
-  </data>
-  <data name="Resource2902" xml:space="preserve">
-    <value>
-datblygiad o NanaZip trwy cofrestru.</value>
   </data>
   <data name="Resource3001" xml:space="preserve">
     <value>Mae na ddim wallau</value>

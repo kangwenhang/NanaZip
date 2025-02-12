@@ -253,16 +253,16 @@
     <value>书签</value>
   </data>
   <data name="Resource900" xml:space="preserve">
-    <value>选项(&amp;O)</value>
+    <value>选项</value>
   </data>
   <data name="Resource901" xml:space="preserve">
-    <value>基准测试(&amp;B)</value>
+    <value>基准测试</value>
   </data>
   <data name="Resource960" xml:space="preserve">
     <value>查看帮助(&amp;C)</value>
   </data>
   <data name="Resource961" xml:space="preserve">
-    <value>关于 NanaZip (&amp;A)</value>
+    <value>关于 NanaZip</value>
   </data>
   <data name="Resource1003" xml:space="preserve">
     <value>路径</value>
@@ -311,6 +311,9 @@
   </data>
   <data name="Resource1018" xml:space="preserve">
     <value>字典大小</value>
+  </data>
+  <data name="Resource1019" xml:space="preserve">
+    <value>CRC</value>
   </data>
   <data name="Resource1020" xml:space="preserve">
     <value>类型</value>
@@ -591,6 +594,9 @@
   <data name="Resource2330" xml:space="preserve">
     <value>压缩 {0} 并邮寄</value>
   </data>
+  <data name="Resource2331" xml:space="preserve">
+    <value>提取到当前位置(智能)</value>
+  </data>
   <data name="Resource2400" xml:space="preserve">
     <value>文件夹</value>
   </data>
@@ -638,6 +644,24 @@
   </data>
   <data name="Resource2508" xml:space="preserve">
     <value>使用大内存页(&amp;L)</value>
+  </data>
+  <data name="Resource2509" xml:space="preserve">
+    <value>保存文件压缩历史记录</value>
+  </data>
+  <data name="Resource2510" xml:space="preserve">
+    <value>保存路径历史记录</value>
+  </data>
+  <data name="Resource2511" xml:space="preserve">
+    <value>保存复制历史记录</value>
+  </data>
+  <data name="Resource2512" xml:space="preserve">
+    <value>保存文件夹历史记录</value>
+  </data>
+  <data name="Resource2513" xml:space="preserve">
+    <value>使用小写校验值</value>
+  </data>
+  <data name="Resource2514" xml:space="preserve">
+    <value>解压后打开目标文件夹</value>
   </data>
   <data name="Resource2900" xml:space="preserve">
     <value>关于 NanaZip</value>
@@ -1110,7 +1134,7 @@
     <value>确认删除多个文件</value>
   </data>
   <data name="Resource6103" xml:space="preserve">
-    <value>确实要删除 「{0}」吗？</value>
+    <value>确实要删除「{0}」吗？</value>
   </data>
   <data name="Resource6104" xml:space="preserve">
     <value>确实要删除文件夹「{0}」以及全部内容吗？</value>
@@ -1327,7 +1351,7 @@
     <value>目录符号链接</value>
   </data>
   <data name="Resource7714" xml:space="preserve">
-    <value>目录连接（Directory Junction）</value>
+    <value>目录连接 (Directory Junction)</value>
   </data>
   <data name="Resource12200" xml:space="preserve">
     <value>集成</value>

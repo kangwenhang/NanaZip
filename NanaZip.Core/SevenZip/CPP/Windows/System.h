@@ -105,7 +105,7 @@ struct CProcessAffinity
   }
   
   void CpuZero() { }
-  void CpuSet(unsigned cpuIndex) { UNUSED_VAR(cpuIndex); }
+  void CpuSet(unsigned /* cpuIndex */) { /* UNUSED_VAR(cpuIndex) */ }
   int IsCpuSet(unsigned cpuIndex) const { return (cpuIndex < numSysThreads) ? 1 : 0; }
 
   BOOL SetProcAffinity() const
@@ -122,7 +122,7 @@ struct CProcessAffinity
 
 UInt32 GetNumberOfProcessors();
 
-bool GetRamSize(UInt64 &size); // returns false, if unknown ram size
+bool GetRamSize(size_t &size); // returns false, if unknown ram size
 
 unsigned long Get_File_OPEN_MAX();
 unsigned Get_File_OPEN_MAX_Reduced_for_3_tasks();

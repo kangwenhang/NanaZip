@@ -4,22 +4,26 @@
     <ProjectGuid>{7262BA1E-732D-4814-972F-698F0B4330A1}</ProjectGuid>
     <RootNamespace>NanaZip.Core.Sfx.Shared</RootNamespace>
     <MileProjectType>StaticLibrary</MileProjectType>
-    <MileProjectEnableVCLTLSupport>true</MileProjectEnableVCLTLSupport>
   </PropertyGroup>
   <Import Project="..\Mile.Project.Windows\Mile.Project.Platform.x86.props" />
   <Import Project="..\Mile.Project.Windows\Mile.Project.Cpp.Default.props" />
   <Import Project="..\Mile.Project.Windows\Mile.Project.Cpp.props" />
   <Import Condition="('$(Platform)'=='Win32') Or ('$(Platform)'=='x64')" Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
-  <PropertyGroup>
-    <IncludePath>$(MSBuildThisFileDirectory)xxHash\;$(IncludePath)</IncludePath>
-    <IncludePath>$(MSBuildThisFileDirectory)Zstandard\;$(IncludePath)</IncludePath>
-  </PropertyGroup>
+  <Import Project="..\K7Pal\K7PalStatic.props" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <RuntimeLibrary Condition="'$(Configuration)' == 'Debug'">MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary Condition="'$(Configuration)' == 'Release'">MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <EnableEnhancedInstructionSet Condition="'$(Platform)'=='Win32'">NoExtensions</EnableEnhancedInstructionSet>
-      <PreprocessorDefinitions>Z7_EXTRACT_ONLY;Z7_NO_READ_FROM_CODER;Z7_SFX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>Z7_EXTRACT_ONLY;Z7_NO_READ_FROM_CODER;Z7_SFX;Z7_NO_LONG_PATH;Z7_NO_LARGE_PAGES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">Z7_LZMA_DEC_OPT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4113;</DisableSpecificWarnings>
+      <Optimization Condition="'$(Configuration)' == 'Release'">MinSpace</Optimization>
+      <FavorSizeOrSpeed Condition="'$(Configuration)' == 'Release'">Size</FavorSizeOrSpeed>
     </ClCompile>
     <MASM>
       <UseSafeExceptionHandlers Condition="'$(Platform)'=='Win32'">true</UseSafeExceptionHandlers>
@@ -31,14 +35,11 @@
     <None Include="SevenZip\ASM\x86\7zCrcOpt.asm" />
     <None Include="SevenZip\ASM\x86\AesOpt.asm" />
     <None Include="SevenZip\ASM\x86\LzmaDecOpt.asm" />
-    <None Include="SevenZip\ASM\x86\Sha256Opt.asm" />
     <None Include="SevenZip\C\7zCrcOpt.c" />
     <None Include="SevenZip\C\AesOpt.c" />
-    <None Include="SevenZip\C\Sha256Opt.c" />
+    <None Include="Extensions\ZSCodecs\ZstdRegister.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Extensions\ZSCodecs\ZstdDecoder.cpp" />
-    <ClCompile Include="Extensions\ZSCodecs\ZstdRegister.cpp" />
     <ClCompile Include="SevenZip\CPP\7zip\Archive\7z\7zDecode.cpp" />
     <ClCompile Include="SevenZip\CPP\7zip\Archive\7z\7zExtract.cpp" />
     <ClCompile Include="SevenZip\CPP\7zip\Archive\7z\7zHandler.cpp" />
@@ -76,6 +77,7 @@
     <ClCompile Include="SevenZip\CPP\7zip\Compress\LzmaRegister.cpp" />
     <ClCompile Include="SevenZip\CPP\7zip\Compress\PpmdDecoder.cpp" />
     <ClCompile Include="SevenZip\CPP\7zip\Compress\PpmdRegister.cpp" />
+    <ClCompile Include="SevenZip\CPP\7zip\Compress\ZstdDecoder.cpp" />
     <ClCompile Include="SevenZip\CPP\7zip\Crypto\7zAes.cpp" />
     <ClCompile Include="SevenZip\CPP\7zip\Crypto\7zAesRegister.cpp" />
     <ClCompile Include="SevenZip\CPP\7zip\Crypto\MyAes.cpp" />
@@ -84,7 +86,6 @@
     <ClCompile Include="SevenZip\CPP\Common\MyString.cpp" />
     <ClCompile Include="SevenZip\CPP\Common\MyVector.cpp" />
     <ClCompile Include="SevenZip\CPP\Common\NewHandler.cpp" />
-    <ClCompile Include="SevenZip\CPP\Common\Sha256Prepare.cpp" />
     <ClCompile Include="SevenZip\CPP\Common\StringConvert.cpp" />
     <ClCompile Include="SevenZip\CPP\Common\UTFConvert.cpp" />
     <ClCompile Include="SevenZip\CPP\Common\Wildcard.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="SevenZip\CPP\Windows\PropVariantConv.cpp" />
     <ClCompile Include="SevenZip\CPP\Windows\Synchronization.cpp" />
     <ClCompile Include="SevenZip\CPP\Windows\System.cpp" />
+    <ClCompile Include="SevenZip\CPP\Windows\TimeUtils.cpp" />
     <ClCompile Include="SevenZip\C\7zCrc.c" />
     <ClCompile Include="SevenZip\C\7zStream.c" />
     <ClCompile Include="SevenZip\C\Aes.c" />
@@ -112,23 +114,12 @@
     <ClCompile Include="SevenZip\C\MtDec.c" />
     <ClCompile Include="SevenZip\C\Ppmd7.c" />
     <ClCompile Include="SevenZip\C\Ppmd7Dec.c" />
-    <ClCompile Include="SevenZip\C\Sha256.c" />
     <ClCompile Include="SevenZip\C\Threads.c" />
-    <ClCompile Include="Zstandard\common\debug.c" />
-    <ClCompile Include="Zstandard\common\entropy_common.c" />
-    <ClCompile Include="Zstandard\common\error_private.c" />
-    <ClCompile Include="Zstandard\common\fse_decompress.c" />
-    <ClCompile Include="Zstandard\common\pool.c" />
-    <ClCompile Include="Zstandard\common\threading.c" />
-    <ClCompile Include="Zstandard\common\zstd_common.c" />
-    <ClCompile Include="Zstandard\decompress\huf_decompress.c" />
-    <ClCompile Include="Zstandard\decompress\zstd_ddict.c" />
-    <ClCompile Include="Zstandard\decompress\zstd_decompress.c" />
-    <ClCompile Include="Zstandard\decompress\zstd_decompress_block.c" />
-    <ClCompile Include="xxHash\xxhash.c" />
+    <ClCompile Include="SevenZip\C\Xxh64.c" />
+    <ClCompile Include="SevenZip\C\ZstdDec.c" />
+    <ClCompile Include="Wrappers\Sha256Wrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Extensions\ZSCodecs\ZstdDecoder.h" />
     <ClInclude Include="SevenZip\CPP\7zip\Archive\7z\7zCompressionMode.h" />
     <ClInclude Include="SevenZip\CPP\7zip\Archive\7z\7zDecode.h" />
     <ClInclude Include="SevenZip\CPP\7zip\Archive\7z\7zHandler.h" />
@@ -169,6 +160,7 @@
     <ClInclude Include="SevenZip\CPP\7zip\Compress\LzmaDecoder.h" />
     <ClInclude Include="SevenZip\CPP\7zip\Compress\PpmdDecoder.h" />
     <ClInclude Include="SevenZip\CPP\7zip\Compress\StdAfx.h" />
+    <ClInclude Include="SevenZip\CPP\7zip\Compress\ZstdDecoder.h" />
     <ClInclude Include="SevenZip\CPP\7zip\Crypto\7zAes.h" />
     <ClInclude Include="SevenZip\CPP\7zip\Crypto\MyAes.h" />
     <ClInclude Include="SevenZip\CPP\7zip\Crypto\RandGen.h" />
@@ -180,6 +172,7 @@
     <ClInclude Include="SevenZip\CPP\7zip\IStream.h" />
     <ClInclude Include="SevenZip\CPP\7zip\PropID.h" />
     <ClInclude Include="SevenZip\CPP\Common\Common.h" />
+    <ClInclude Include="SevenZip\CPP\Common\Common0.h" />
     <ClInclude Include="SevenZip\CPP\Common\ComTry.h" />
     <ClInclude Include="SevenZip\CPP\Common\Defs.h" />
     <ClInclude Include="SevenZip\CPP\Common\IntToString.h" />
@@ -231,28 +224,9 @@
     <ClInclude Include="SevenZip\C\RotateDefs.h" />
     <ClInclude Include="SevenZip\C\Sha256.h" />
     <ClInclude Include="SevenZip\C\Threads.h" />
-    <ClInclude Include="Zstandard\common\allocations.h" />
-    <ClInclude Include="Zstandard\common\bits.h" />
-    <ClInclude Include="Zstandard\common\bitstream.h" />
-    <ClInclude Include="Zstandard\common\compiler.h" />
-    <ClInclude Include="Zstandard\common\cpu.h" />
-    <ClInclude Include="Zstandard\common\debug.h" />
-    <ClInclude Include="Zstandard\common\error_private.h" />
-    <ClInclude Include="Zstandard\common\fse.h" />
-    <ClInclude Include="Zstandard\common\huf.h" />
-    <ClInclude Include="Zstandard\common\mem.h" />
-    <ClInclude Include="Zstandard\common\pool.h" />
-    <ClInclude Include="Zstandard\common\portability_macros.h" />
-    <ClInclude Include="Zstandard\common\threading.h" />
-    <ClInclude Include="Zstandard\common\zstd_deps.h" />
-    <ClInclude Include="Zstandard\common\zstd_internal.h" />
-    <ClInclude Include="Zstandard\common\zstd_trace.h" />
-    <ClInclude Include="Zstandard\decompress\zstd_ddict.h" />
-    <ClInclude Include="Zstandard\decompress\zstd_decompress_block.h" />
-    <ClInclude Include="Zstandard\decompress\zstd_decompress_internal.h" />
-    <ClInclude Include="Zstandard\zstd.h" />
-    <ClInclude Include="Zstandard\zstd_errors.h" />
-    <ClInclude Include="xxHash\xxhash.h" />
+    <ClInclude Include="SevenZip\C\Xxh64.h" />
+    <ClInclude Include="SevenZip\C\ZstdDec.h" />
+    <ClInclude Include="Wrappers\Sha256Wrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="SevenZip\CPP\7zip\Guid.txt" />
@@ -272,18 +246,6 @@
   <Target Name="NanaZipCoreLzmaDecHardwareAccelerationBuildAssemblySource" BeforeTargets="_MASM">
     <ItemGroup Condition="'$(Platform)'=='x64'">
       <MASM Include="SevenZip\ASM\x86\LzmaDecOpt.asm" />
-    </ItemGroup>
-  </Target>
-  <Target Name="NanaZipCoreSha256HardwareAccelerationBuildAssemblySource" BeforeTargets="_MASM">
-    <ItemGroup Condition="('$(Platform)'=='Win32') Or ('$(Platform)'=='x64')">
-      <MASM Include="SevenZip\ASM\x86\Sha256Opt.asm" />
-    </ItemGroup>
-  </Target>
-  <Target Name="NanaZipCoreSha256HardwareAccelerationBuildCSource" BeforeTargets="BeforeClCompile">
-    <ItemGroup Condition="('$(Platform)'!='Win32') And ('$(Platform)'!='x64')">
-      <ClCompile Include="SevenZip\C\Sha256Opt.c">
-        <Optimization Condition="'$(Configuration)'=='Release'">MaxSpeed</Optimization>
-      </ClCompile>
     </ItemGroup>
   </Target>
   <Target Name="NanaZipCoreCrcHardwareAccelerationBuildAssemblySource" BeforeTargets="_MASM">

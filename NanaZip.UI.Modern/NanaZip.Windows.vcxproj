@@ -7,7 +7,7 @@
     <TargetName>NanaZip.Windows</TargetName>
     <MileProjectManifestFile>NanaZip.Windows.manifest</MileProjectManifestFile>
     <WindowsTargetPlatformMinVersion>10.0.19041.0</WindowsTargetPlatformMinVersion>
-    <MileProjectEnableVCLTLSupport>true</MileProjectEnableVCLTLSupport>
+    <MileUniCrtDisableRuntimeDebuggingFeature>true</MileUniCrtDisableRuntimeDebuggingFeature>
     <MileProjectEnableCppWinRTSupport>true</MileProjectEnableCppWinRTSupport>
     <MileProjectUseProjectProperties>true</MileProjectUseProjectProperties>
     <MileProjectCompanyName>M2-Team</MileProjectCompanyName>
@@ -16,8 +16,8 @@
     <MileProjectLegalCopyright>© M2-Team and Contributors. All rights reserved.</MileProjectLegalCopyright>
     <MileProjectOriginalFilename>NanaZip.Windows.exe</MileProjectOriginalFilename>
     <MileProjectProductName>NanaZip</MileProjectProductName>
-    <MileProjectVersion>3.0.$([System.DateTime]::Today.Subtract($([System.DateTime]::Parse('2021-08-31'))).TotalDays).0</MileProjectVersion>
-    <MileProjectVersionTag>Preview 1</MileProjectVersionTag>
+    <MileProjectVersion>5.1.$([System.DateTime]::Today.Subtract($([System.DateTime]::Parse('2021-08-31'))).TotalDays).0</MileProjectVersion>
+    <MileProjectVersionTag>Preview 0</MileProjectVersionTag>
   </PropertyGroup>
   <Import Project="..\Mile.Project.Windows\Mile.Project.Platform.x64.props" />
   <Import Project="..\Mile.Project.Windows\Mile.Project.Platform.ARM64.props" />
@@ -25,6 +25,7 @@
   <Import Project="..\Mile.Project.Windows\Mile.Project.Cpp.props" />
   <Import Project="..\NanaZip.Shared\NanaZip.Shared.ModernExperienceShims.props" />
   <Import Project="..\NanaZip.Shared\NanaZip.Shared.Mitigations.props" />
+  <Import Project="..\NanaZip.Frieren\NanaZip.Frieren.props" />
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions) /Wv:18</AdditionalOptions>
@@ -34,6 +35,12 @@
       <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>runtimeobject.lib;comctl32.lib;htmlhelp.lib;comdlg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <RuntimeLibrary Condition="'$(Configuration)' == 'Debug'">MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary Condition="'$(Configuration)' == 'Release'">MultiThreaded</RuntimeLibrary>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Manifest Include="NanaZip.Windows.manifest" />
@@ -277,7 +284,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Mile.Windows.Helpers">
-      <Version>1.0.15</Version>
+      <Version>1.0.671</Version>
+    </PackageReference>
+    <PackageReference Include="Mile.Windows.UniCrt">
+      <Version>1.2.328</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

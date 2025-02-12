@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Extensions">
-      <UniqueIdentifier>{603f3b98-10fa-4703-a074-78a3a0575141}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Extensions\ZSCodecs">
-      <UniqueIdentifier>{de1196d7-993c-4105-b0c0-be4dabfcad93}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SevenZip">
       <UniqueIdentifier>{831b4812-8fbb-43f7-b499-2c0a9de0247f}</UniqueIdentifier>
     </Filter>
@@ -49,17 +43,14 @@
     <Filter Include="SevenZip\CPP\7zip\Archive\Common">
       <UniqueIdentifier>{90bdad4f-0ef4-4cb5-a451-71a8b415d708}</UniqueIdentifier>
     </Filter>
-    <Filter Include="xxHash">
-      <UniqueIdentifier>{ece8cf21-93f6-410b-a751-f639ab55ffdb}</UniqueIdentifier>
+    <Filter Include="Extensions">
+      <UniqueIdentifier>{8892af78-26a4-4504-9e3d-d303756f56ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Zstandard">
-      <UniqueIdentifier>{2936146f-34bd-49b6-a3d7-88ee1f816e65}</UniqueIdentifier>
+    <Filter Include="Extensions\ZSCodecs">
+      <UniqueIdentifier>{1f305354-6929-465a-96f8-c10248b20758}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Zstandard\common">
-      <UniqueIdentifier>{cffe370f-0b87-4dc3-91da-582a89390355}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Zstandard\decompress">
-      <UniqueIdentifier>{a7d780ce-6b10-4973-8e3a-59ed56e3017a}</UniqueIdentifier>
+    <Filter Include="Wrappers">
+      <UniqueIdentifier>{f2cb8db9-ad05-4731-87cb-b0ff70879041}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,62 +67,17 @@
     <None Include="SevenZip\C\AesOpt.c">
       <Filter>SevenZip\C</Filter>
     </None>
-    <None Include="SevenZip\ASM\x86\Sha256Opt.asm">
-      <Filter>SevenZip\ASM\x86</Filter>
-    </None>
-    <None Include="SevenZip\C\Sha256Opt.c">
-      <Filter>SevenZip\C</Filter>
-    </None>
     <None Include="SevenZip\ASM\x86\7zCrcOpt.asm">
       <Filter>SevenZip\ASM\x86</Filter>
     </None>
     <None Include="SevenZip\C\7zCrcOpt.c">
       <Filter>SevenZip\C</Filter>
     </None>
+    <None Include="Extensions\ZSCodecs\ZstdRegister.cpp">
+      <Filter>Extensions\ZSCodecs</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="xxHash\xxhash.c">
-      <Filter>xxHash</Filter>
-    </ClCompile>
-    <ClCompile Include="Zstandard\common\debug.c">
-      <Filter>Zstandard\common</Filter>
-    </ClCompile>
-    <ClCompile Include="Zstandard\common\entropy_common.c">
-      <Filter>Zstandard\common</Filter>
-    </ClCompile>
-    <ClCompile Include="Zstandard\common\error_private.c">
-      <Filter>Zstandard\common</Filter>
-    </ClCompile>
-    <ClCompile Include="Zstandard\common\fse_decompress.c">
-      <Filter>Zstandard\common</Filter>
-    </ClCompile>
-    <ClCompile Include="Zstandard\common\pool.c">
-      <Filter>Zstandard\common</Filter>
-    </ClCompile>
-    <ClCompile Include="Zstandard\common\threading.c">
-      <Filter>Zstandard\common</Filter>
-    </ClCompile>
-    <ClCompile Include="Zstandard\common\zstd_common.c">
-      <Filter>Zstandard\common</Filter>
-    </ClCompile>
-    <ClCompile Include="Zstandard\decompress\huf_decompress.c">
-      <Filter>Zstandard\decompress</Filter>
-    </ClCompile>
-    <ClCompile Include="Zstandard\decompress\zstd_ddict.c">
-      <Filter>Zstandard\decompress</Filter>
-    </ClCompile>
-    <ClCompile Include="Zstandard\decompress\zstd_decompress.c">
-      <Filter>Zstandard\decompress</Filter>
-    </ClCompile>
-    <ClCompile Include="Zstandard\decompress\zstd_decompress_block.c">
-      <Filter>Zstandard\decompress</Filter>
-    </ClCompile>
-    <ClCompile Include="Extensions\ZSCodecs\ZstdDecoder.cpp">
-      <Filter>Extensions\ZSCodecs</Filter>
-    </ClCompile>
-    <ClCompile Include="Extensions\ZSCodecs\ZstdRegister.cpp">
-      <Filter>Extensions\ZSCodecs</Filter>
-    </ClCompile>
     <ClCompile Include="SevenZip\C\Aes.c">
       <Filter>SevenZip\C</Filter>
     </ClCompile>
@@ -215,12 +161,6 @@
     </ClCompile>
     <ClCompile Include="SevenZip\C\Threads.c">
       <Filter>SevenZip\C</Filter>
-    </ClCompile>
-    <ClCompile Include="SevenZip\C\Sha256.c">
-      <Filter>SevenZip\C</Filter>
-    </ClCompile>
-    <ClCompile Include="SevenZip\CPP\Common\Sha256Prepare.cpp">
-      <Filter>SevenZip\CPP\Common</Filter>
     </ClCompile>
     <ClCompile Include="SevenZip\CPP\7zip\Archive\Common\MultiStream.cpp">
       <Filter>SevenZip\CPP\7zip\Archive\Common</Filter>
@@ -357,77 +297,23 @@
     <ClCompile Include="SevenZip\CPP\7zip\Archive\7z\7zRegister.cpp">
       <Filter>SevenZip\CPP\7zip\Archive\7z</Filter>
     </ClCompile>
+    <ClCompile Include="SevenZip\CPP\Windows\TimeUtils.cpp">
+      <Filter>SevenZip\CPP\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="SevenZip\C\ZstdDec.c">
+      <Filter>SevenZip\C</Filter>
+    </ClCompile>
+    <ClCompile Include="SevenZip\C\Xxh64.c">
+      <Filter>SevenZip\C</Filter>
+    </ClCompile>
+    <ClCompile Include="SevenZip\CPP\7zip\Compress\ZstdDecoder.cpp">
+      <Filter>SevenZip\CPP\7zip\Compress</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\Sha256Wrapper.cpp">
+      <Filter>Wrappers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="xxHash\xxhash.h">
-      <Filter>xxHash</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\zstd.h">
-      <Filter>Zstandard</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\zstd_errors.h">
-      <Filter>Zstandard</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\allocations.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\bits.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\bitstream.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\compiler.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\cpu.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\debug.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\error_private.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\fse.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\huf.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\mem.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\pool.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\portability_macros.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\threading.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\zstd_deps.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\zstd_internal.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\common\zstd_trace.h">
-      <Filter>Zstandard\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\decompress\zstd_ddict.h">
-      <Filter>Zstandard\decompress</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\decompress\zstd_decompress_block.h">
-      <Filter>Zstandard\decompress</Filter>
-    </ClInclude>
-    <ClInclude Include="Zstandard\decompress\zstd_decompress_internal.h">
-      <Filter>Zstandard\decompress</Filter>
-    </ClInclude>
-    <ClInclude Include="Extensions\ZSCodecs\ZstdDecoder.h">
-      <Filter>Extensions\ZSCodecs</Filter>
-    </ClInclude>
     <ClInclude Include="SevenZip\C\Aes.h">
       <Filter>SevenZip\C</Filter>
     </ClInclude>
@@ -733,6 +619,21 @@
     </ClInclude>
     <ClInclude Include="SevenZip\CPP\7zip\Archive\7z\StdAfx.h">
       <Filter>SevenZip\CPP\7zip\Archive\7z</Filter>
+    </ClInclude>
+    <ClInclude Include="SevenZip\CPP\Common\Common0.h">
+      <Filter>SevenZip\CPP\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="SevenZip\C\ZstdDec.h">
+      <Filter>SevenZip\C</Filter>
+    </ClInclude>
+    <ClInclude Include="SevenZip\C\Xxh64.h">
+      <Filter>SevenZip\C</Filter>
+    </ClInclude>
+    <ClInclude Include="SevenZip\CPP\7zip\Compress\ZstdDecoder.h">
+      <Filter>SevenZip\CPP\7zip\Compress</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\Sha256Wrapper.h">
+      <Filter>Wrappers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

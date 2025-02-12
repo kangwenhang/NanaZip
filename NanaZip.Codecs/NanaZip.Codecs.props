@@ -9,6 +9,7 @@
   MAINTAINER: MouriNaruto (Kenji.Mouri@outlook.com)
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\NanaZip.Specification\NanaZip.Specification.props" />
   <PropertyGroup>
     <IncludePath>$(MSBuildThisFileDirectory)BLAKE3\;$(IncludePath)</IncludePath>
     <IncludePath>$(MSBuildThisFileDirectory)Brotli\include\;$(IncludePath)</IncludePath>
@@ -19,10 +20,14 @@
     <IncludePath>$(MSBuildThisFileDirectory)LZ4\;$(IncludePath)</IncludePath>
     <IncludePath>$(MSBuildThisFileDirectory)LZ5\;$(IncludePath)</IncludePath>
     <IncludePath>$(MSBuildThisFileDirectory)RHash\;$(IncludePath)</IncludePath>
+    <IncludePath>$(MSBuildThisFileDirectory)xxHash\;$(IncludePath)</IncludePath>
+    <IncludePath>$(MSBuildThisFileDirectory)Zstandard\;$(IncludePath)</IncludePath>
     <IncludePath>$(MSBuildThisFileDirectory)ZSTDMT\;$(IncludePath)</IncludePath>
+    <IncludePath>$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
+      <PreprocessorDefinitions>ZSTD_MULTITHREAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalDependencies>$(OutDir)NanaZip.Codecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

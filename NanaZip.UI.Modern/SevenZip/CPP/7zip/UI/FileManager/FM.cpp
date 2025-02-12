@@ -9,6 +9,7 @@
 #include "../../../../C/Alloc.h"
 #ifdef _WIN32
 #include "../../../../C/DllSecur.h"
+#include "DllBlock.h"
 #include "Mitigations.h"
 #endif
 
@@ -39,6 +40,7 @@
 
 #include "../../../../../pch.h"
 #include "../../../../../App.h"
+#include "../../../../../NanaZip.UI.h"
 
 using namespace NWindows;
 using namespace NFile;
@@ -184,7 +186,7 @@ CApp g_App;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-static const wchar_t * const kWindowClass = L"FM";
+static const wchar_t * const kWindowClass = L"NanaZip.Modern.FileManager";
 
 #ifdef UNDER_CE
 #define WS_OVERLAPPEDWINDOW ( \
@@ -230,13 +232,7 @@ static BOOL InitInstance(int nCmdShow)
   // wc.hbrBackground = (HBRUSH) GetStockObject(WHITE_BRUSH);
   wc.hbrBackground = (HBRUSH) (COLOR_BTNFACE + 1);
 
-  wc.lpszMenuName =
-    #ifdef UNDER_CE
-    0
-    #else
-    MAKEINTRESOURCEW(IDM_MENU)
-    #endif
-    ;
+  wc.lpszMenuName = nullptr;
 
   wc.lpszClassName = kWindowClass;
 
@@ -522,6 +518,8 @@ static int WINAPI WinMain2(int nCmdShow)
   winrt::com_ptr<winrt::NanaZip::Modern::implementation::App> app =
       winrt::make_self<winrt::NanaZip::Modern::implementation::App>();
 
+  NanaZip::UI::SpecialCommandHandler();
+
   UString commandsString;
   // MessageBoxW(0, GetCommandLineW(), L"", 0);
 
@@ -668,6 +666,8 @@ static int WINAPI WinMain2(int nCmdShow)
   return (int)msg.wParam;
 }
 
+#include <NanaZip.Frieren.h>
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
     #ifdef UNDER_CE
     LPWSTR
@@ -678,16 +678,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /* hPrevInstance */,
 {
   g_hInstance = hInstance;
 
+  ::NanaZipFrierenGlobalInitialize();
+
+  if (!::NanaZipBlockDlls())
+  {
+    ErrorMessage("Cannot block DLL loading");
+  }
   if (!::NanaZipEnableMitigations())
   {
     ErrorMessage("Cannot enable security mitigations");
   }
-
-#ifdef NDEBUG
-  // opt out of dynamic code policy on UI thread to prevent Explorer extension incompatibility
-  // ignore errors since they shouldn't be fatal
-  ::NanaZipThreadDynamicCodeAllow();
-#endif
 
   try
   {
@@ -976,6 +976,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         g_CanChangeSplitter = true;
       }
 
+      // fix status bar on resize
+      g_App.Refresh_StatusBar();
+
       g_Maximized = (wParam == SIZE_MAXIMIZED) || (wParam == SIZE_MAXSHOW);
 
       g_App.MoveSubWindows();
@@ -1041,8 +1044,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_DPICHANGED:
     {
-        g_App.ReloadToolbars();
-
         auto lprcNewScale = reinterpret_cast<RECT*>(lParam);
 
         ::SetWindowPos(
@@ -1055,7 +1056,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             SWP_NOZORDER | SWP_NOACTIVATE);
 
         ::UpdateWindow(hWnd);
+
+        break;
     }
+    case WM_SETTINGCHANGE:
+    {
+        ::SendMessageW(g_App.m_ToolBar, message, wParam, lParam);
+
+        break;
+    }
+    default:
+        break;
   }
   #ifndef _UNICODE
   if (g_IsNT)
@@ -1064,19 +1075,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
   #endif
     return DefWindowProc(hWnd, message, wParam, lParam);
 
-}
-
-static int Window_GetRealHeight(NWindows::CWindow &w)
-{
-  RECT rect;
-  w.GetWindowRect(&rect);
-  int res = RECT_SIZE_Y(rect);
-  #ifndef UNDER_CE
-  WINDOWPLACEMENT placement;
-  if (w.GetPlacement(&placement))
-    res += placement.rcNormalPosition.top;
-  #endif
-  return res;
 }
 
 void CApp::MoveSubWindows()
@@ -1099,14 +1097,28 @@ void CApp::MoveSubWindows()
   }
   #endif
 
-  if (_toolBar)
+  if (this->m_ToolBar)
   {
-    _toolBar.AutoSize();
-    #ifdef UNDER_CE
-    int h2 = Window_GetRealHeight(_toolBar);
-    _toolBar.Move(0, headerSize, xSize, h2);
-    #endif
-    headerSize += Window_GetRealHeight(_toolBar);
+      UINT DpiValue = ::GetDpiForWindow(hWnd);
+
+      int MainWindowToolBarScaledHeight = ::MulDiv(
+          48,
+          DpiValue,
+          USER_DEFAULT_SCREEN_DPI);
+
+      RECT ClientRect = { 0 };
+      ::GetClientRect(hWnd, &ClientRect);
+
+      ::SetWindowPos(
+          this->m_ToolBar,
+          nullptr,
+          0,
+          0,
+          ClientRect.right - ClientRect.left,
+          MainWindowToolBarScaledHeight,
+          SWP_SHOWWINDOW);
+
+      headerSize += MainWindowToolBarScaledHeight;
   }
 
   int ySize = MyMax((int)(rect.bottom - headerSize), 0);

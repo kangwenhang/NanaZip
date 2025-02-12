@@ -25,19 +25,20 @@ of the Software.
 
 ### The philosophy about open-source software from Kenji Mouri (MouriNaruto)
 
-```
-You shouldn't make your software open source if you don't want your source code
-or ideas used in proprietary software. Because they always have the way to cross
-restrictions if they really want to do, even you distributed your source code 
-under the strictest copyleft license, they can use clean room to resolve it. 
+- The source code from the third-party projects should be distributed under 
+  their original licenses to give the maximum respect for the upstream 
+  projects.
 
-Use copyleft licenses make you feel anxious because you always need to worry 
-about someone uses your source code in proprietary software. So, I choose to 
-give the maximum respect to users and I also hope every people treat others 
-kindly.
+- Don't make your software open source if you don't want your source code or
+  ideas used in proprietary software. Because they always have the way to cross
+  restrictions if they really want to do, even you distributed your source code
+  under the strictest copyleft license, they can use clean room to resolve it.
 
-Kenji Mouri
-```
+- I prefer permissive licenses because using copyleft licenses will make you
+  feel anxious in most cases because you always need to worry about someone
+  using your source code in proprietary software. So, I choose to give the
+  maximum respect to users, and I also hope people can try their best to treat
+  others kindly.
 
 ### The MIT License
 
@@ -578,19 +579,21 @@ Creative Commons may be contacted at creativecommons.org.
 - BLAKE3, https://github.com/BLAKE3-team/BLAKE3
 - Brotli, https://github.com/google/brotli
 - C++/WinRT, https://github.com/microsoft/cppwinrt
-- Detours, https://github.com/microsoft/Detours
 - Fast LZMA2, https://github.com/conor42/fast-lzma2
+- FreeBSD, https://github.com/freebsd/freebsd-src
 - GmSSL, https://github.com/guanzhi/GmSSL
-- Heimdal, https://github.com/heimdal/heimdal
 - Lizard, https://github.com/inikep/lizard
 - LZ4, https://github.com/lz4/lz4
 - LZ5, https://github.com/inikep/lizard
 - LZMA SDK, https://www.7-zip.org/sdk.html
+- Mile.Detours, https://github.com/ProjectMile/Mile.Detours
+- Mile.Json, https://github.com/ProjectMile/Mile.Json
 - Mile.Project.Windows, https://github.com/ProjectMile/Mile.Project.Windows
 - Mile.Windows.Helpers, https://github.com/ProjectMile/Mile.Windows.Helpers
+- Mile.Windows.Internal, https://github.com/ProjectMile/Mile.Windows.Internal
+- Mile.Windows.UniCrt, https://github.com/ProjectMile/Mile.Windows.UniCrt
 - Mile.Xaml, https://github.com/ProjectMile/Mile.Xaml
 - RHash, https://github.com/rhash/RHash
-- VC-LTL, https://github.com/Chuyu-Team/VC-LTL5
 - xxHash, https://github.com/Cyan4973/xxHash
 - Zstandard, https://github.com/facebook/zstd
 - ZSTDMT, https://github.com/mcmilk/zstdmt

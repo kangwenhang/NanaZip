@@ -47,6 +47,10 @@ EXPORT_CODECS
 #include "../../Common/RegisterArc.h"
 #include "../../Common/RegisterCodec.h"
 
+// **************** NanaZip Modification Start ****************
+#include <Mile.Helpers.Base.h>
+// **************** NanaZip Modification End ****************
+
 #ifdef Z7_EXTERNAL_CODECS
 // #define EXPORT_CODECS
 #endif
@@ -68,18 +72,28 @@ using namespace NFile;
 #define kCodecsFolderName FTEXT("Codecs")
 #define kFormatsFolderName FTEXT("Formats")
 
-
+// **************** NanaZip Modification Start ****************
+//static CFSTR const kMainDll =
+//  #ifdef _WIN32
+//    FTEXT("7z.dll");
+//  #else
+//    FTEXT("7z.so");
+//  #endif
 static CFSTR const kMainDll =
   #ifdef _WIN32
-    FTEXT("7z.dll");
+    FTEXT("NanaZip.Core.dll");
   #else
-    FTEXT("7z.so");
+    FTEXT("NanaZip.Core.so");
   #endif
+// **************** NanaZip Modification End ****************
 
 
 #ifdef _WIN32
 
-static LPCTSTR const kRegistryPath = TEXT("Software") TEXT(STRING_PATH_SEPARATOR) TEXT("7-zip");
+// **************** NanaZip Modification Start ****************
+//static LPCTSTR const kRegistryPath = TEXT("Software") TEXT(STRING_PATH_SEPARATOR) TEXT("7-zip");
+static LPCTSTR const kRegistryPath = TEXT("Software") TEXT(STRING_PATH_SEPARATOR) TEXT("NanaZip");
+// **************** NanaZip Modification End ****************
 static LPCWSTR const kProgramPathValue = L"Path";
 static LPCWSTR const kProgramPath2Value = L"Path"
   #ifdef _WIN64
@@ -261,6 +275,10 @@ static HRESULT GetMethodBoolProp(Func_GetMethodProperty getMethodProperty, UInt3
 
 #if defined(__clang__)
 #pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
+#endif
+
+#ifdef _WIN32
+Z7_DIAGNOSTIC_IGNORE_CAST_FUNCTION
 #endif
 
 #define MY_GET_FUNC(dest, type, lib, func)  \
@@ -828,6 +846,15 @@ HRESULT CCodecs::Load()
 
   #ifdef Z7_EXTERNAL_CODECS
     const FString baseFolder = GetBaseFolderPrefixFromRegistry();
+    // **************** NanaZip Modification Start ****************
+    {
+      ::MileLoadLibraryFromSystem32(baseFolder + L"K7Pal.dll");
+      bool loadedOK;
+      RINOK(LoadDll(baseFolder + L"NanaZip.Codecs.dll", false, &loadedOK));
+      if (!loadedOK)
+        MainDll_ErrorPath = L"NanaZip.Codecs.dll";
+    }
+    // **************** NanaZip Modification End ****************
     {
       bool loadedOK;
       RINOK(LoadDll(baseFolder + kMainDll, false, &loadedOK))

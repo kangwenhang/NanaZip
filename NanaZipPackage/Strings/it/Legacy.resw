@@ -226,7 +226,7 @@
     <value>Livello superiore</value>
   </data>
   <data name="Resource736" xml:space="preserve">
-    <value>Cronologia cartele...</value>
+    <value>Cronologia cartelle...</value>
   </data>
   <data name="Resource737" xml:space="preserve">
     <value>&amp;Aggiorna</value>
@@ -253,16 +253,16 @@
     <value>Segnalibro</value>
   </data>
   <data name="Resource900" xml:space="preserve">
-    <value>&amp;Opzioni...</value>
+    <value>Opzioni...</value>
   </data>
   <data name="Resource901" xml:space="preserve">
-    <value>&amp;Benchmark</value>
+    <value>Benchmark</value>
   </data>
   <data name="Resource960" xml:space="preserve">
     <value>&amp;Guida...</value>
   </data>
   <data name="Resource961" xml:space="preserve">
-    <value>&amp;Informazioni su NanaZip...</value>
+    <value>Informazioni su NanaZip...</value>
   </data>
   <data name="Resource1003" xml:space="preserve">
     <value>Percorso</value>
@@ -874,15 +874,6 @@ Vuoi aggiornare l'archivio?</value>
   </data>
   <data name="Resource3764" xml:space="preserve">
     <value>Inizio dell'archivio non confermato</value>
-  </data>
-  <data name="Resource3765" xml:space="preserve">
-    <value>	</value>
-  </data>
-  <data name="Resource3766" xml:space="preserve">
-    <value>	</value>
-  </data>
-  <data name="Resource3767" xml:space="preserve">
-    <value>	</value>
   </data>
   <data name="Resource3768" xml:space="preserve">
     <value>Funzionalità non supportata</value>

@@ -253,16 +253,16 @@
     <value>Zakładka</value>
   </data>
   <data name="Resource900" xml:space="preserve">
-    <value>&amp;Opcje...</value>
+    <value>Opcje...</value>
   </data>
   <data name="Resource901" xml:space="preserve">
-    <value>&amp;Test wydajności</value>
+    <value>Test wydajności</value>
   </data>
   <data name="Resource960" xml:space="preserve">
     <value>&amp;Zawartość</value>
   </data>
   <data name="Resource961" xml:space="preserve">
-    <value>NanaZip - i&amp;nformacje</value>
+    <value>NanaZip - informacje</value>
   </data>
   <data name="Resource1003" xml:space="preserve">
     <value>Ścieżka</value>
@@ -513,6 +513,12 @@
   <data name="Resource1093" xml:space="preserve">
     <value>Tylko do odczytu</value>
   </data>
+  <data name="Resource1095" xml:space="preserve">
+    <value>Kopiuj odnośnik</value>
+  </data>
+  <data name="Resource1098" xml:space="preserve">
+    <value>Zmienione metadane</value>
+  </data>
   <data name="Resource2100" xml:space="preserve">
     <value>Opcje</value>
   </data>
@@ -585,6 +591,9 @@
   <data name="Resource2330" xml:space="preserve">
     <value>Skompresuj do {0} i wyślij e-mailem</value>
   </data>
+  <data name="Resource2331" xml:space="preserve">
+    <value>Wypakuj tutaj (Inteligentnie)</value>
+  </data>
   <data name="Resource2400" xml:space="preserve">
     <value>Foldery</value>
   </data>
@@ -632,6 +641,24 @@
   </data>
   <data name="Resource2508" xml:space="preserve">
     <value>&amp;Użyj dużych stron pamięci</value>
+  </data>
+  <data name="Resource2509" xml:space="preserve">
+    <value>Zachowaj historię dostępu do archiwów</value>
+  </data>
+  <data name="Resource2510" xml:space="preserve">
+    <value>Zachowaj historię ścieżek do wypakowanych archiwów</value>
+  </data>
+  <data name="Resource2511" xml:space="preserve">
+    <value>Zachowaj historię ścieżek docelowych kopiowania</value>
+  </data>
+  <data name="Resource2512" xml:space="preserve">
+    <value>Zachowaj historię folderów</value>
+  </data>
+  <data name="Resource2513" xml:space="preserve">
+    <value>Małoliterowe sumy kontrolne</value>
+  </data> 
+  <data name="Resource2514" xml:space="preserve">
+    <value>Otwórz folder po wypakowaniu</value>
   </data>
   <data name="Resource2900" xml:space="preserve">
     <value>NanaZip - informacje</value>
@@ -790,6 +817,12 @@ Czy chcesz zaktualizować go w archiwum?</value>
   </data>
   <data name="Resource3431" xml:space="preserve">
     <value>Przywróć zabezpieczenia plików</value>
+  </data>
+  <data name="Resource3440" xml:space="preserve">
+    <value>Propagowanie strumienia Zone.Id:</value>
+  </data>
+  <data name="Resource3441" xml:space="preserve">
+    <value>Dla dokumentów MS Office</value>
   </data>
   <data name="Resource3500" xml:space="preserve">
     <value>Potwierdź zamianę pliku</value>
@@ -1024,6 +1057,33 @@ Czy chcesz zaktualizować go w archiwum?</value>
   </data>
   <data name="Resource4073" xml:space="preserve">
     <value>Ciągły</value>
+  </data>
+  <data name="Resource4080" xml:space="preserve">
+    <value>Czas</value>
+  </data>
+  <data name="Resource4081" xml:space="preserve">
+    <value>Precyzja znacznika czasu:</value>
+  </data>
+  <data name="Resource4082" xml:space="preserve">
+    <value>Przechowuj czas ostatniej modyfikacji</value>
+  </data>
+  <data name="Resource4083" xml:space="preserve">
+    <value>Przechowuj czas utworzenia</value>
+  </data>
+  <data name="Resource4084" xml:space="preserve">
+    <value>Przechowuj czas ostatniego dostępu</value>
+  </data>
+  <data name="Resource4085" xml:space="preserve">
+    <value>Ustaw czas archiwizacji na czas ostatniego pliku</value>
+  </data>
+  <data name="Resource4086" xml:space="preserve">
+    <value>Nie zmieniaj czasu ostatniego dostępu do plików źródłowych</value>
+  </data>
+  <data name="Resource4090" xml:space="preserve">
+    <value>sek.</value>
+  </data>
+  <data name="Resource4091" xml:space="preserve">
+    <value>ns</value>
   </data>
   <data name="Resource6000" xml:space="preserve">
     <value>Kopiuj</value>

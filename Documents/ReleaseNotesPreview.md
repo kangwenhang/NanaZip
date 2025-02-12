@@ -2,6 +2,96 @@
 
 For stable versions, please read [NanaZip Release Notes](ReleaseNotes.md).
 
+**NanaZip 5.1 Preview 0 (5.1.1252.0)**
+
+This release includes all the improvements from NanaZip 5.0 Update 1
+(5.0.1252.0).
+
+**NanaZip 5.0 Preview 2 (5.0.1243.0)**
+
+- Continue to improve the work-in-progress NanaZip Platform Abstraction Layer
+  (K7Pal). (https://github.com/M2Team/NanaZip/tree/main/K7Pal)
+  - Fix the crash and encrypted RAR5 format extraction wrong password issue for
+    7-Zip's hash algorithms wrappers which mentioned in
+    https://github.com/M2Team/NanaZip/issues/542. (Thanks to RuesanG.)
+  - Introduce K7PalHashDuplicate API.
+  - Remove K7PalHashReset API for improving the security.
+  - Reduce the saved information in hash contexts to improve the security.
+  - Use NanaZip Platform Abstraction Layer (K7Pal) to implement 7-Zip's SHA-1
+    hash algorithms.
+- Update zh-Hans and zh-Hant translations for 'Want * History' strings. 
+  (Contributed by R-YaTian.) (Forget to mentioned in NanaZip 5.0 Preview 1.)
+- Adds a setting for opening the folder after extracting from archive.
+  (Contributing by DaxDupont.)
+- Introduce the Smart Extraction. (Contributed by R-YaTian.)
+- Fix the issue that which NanaZip windows and dialogs will be opened in the
+  background when using NanaZip from context menu. (Contributed by R-YaTian.)
+- Update xxHash to v0.8.3.
+  (https://github.com/Cyan4973/xxHash/releases/tag/v0.8.3)
+
+**NanaZip 5.0 Preview 1 (5.0.1215.0)**
+
+- Introduce NanaZip Platform Abstraction Layer (K7Pal) for wrapping the platform
+  specific infrastructures. (https://github.com/M2Team/NanaZip/tree/main/K7Pal)
+  (Work In Progress)
+  - Provide hash functions interfaces implemented with Windows CNG API. NanaZip
+    uses these hash functions from K7Pal:
+    - MD2
+    - MD4
+    - MD5
+    - SHA-1
+    - SHA-256
+    - SHA-384
+    - SHA-512
+    - ED2K (Implemented as the K7Pal MD4 wrapper in NanaZip.Codecs.)
+- Synchronize the 7-Zip mainline implementations to 24.09.
+  (https://github.com/ip7z/7zip/releases/tag/24.09) (Thanks to Igor Pavlov.
+  Noticed by FadeMind and peashooter2.)
+- Finally move NanaZip console version to NanaZip.Core project.
+- Don't fail ModernSHBrowseForFolderW when DefaultFolder cannot be set.
+  (Contributed by dinhngtu.)
+- Update Mile.Windows.UniCrt to 1.1.278.
+
+**NanaZip 5.0 Preview 0 (5.0.1188.0)**
+
+- This release includes all the improvements from NanaZip 3.1 (3.1.1080.0)
+  (https://github.com/M2Team/NanaZip/releases/tag/3.1.1080.0).
+- Update Brazilian Portuguese translation. (Contributed by maisondasilva.)
+- Make sure NanaZip Core (except the Self Extracting Executables) and NanaZip
+  Classic using ucrtbase.dll with 10.0.19041.0 version or later.
+- Update Mile.Windows.Helpers to 1.0.671.
+    (https://github.com/ProjectMile/Mile.Windows.Helpers/tree/1.0.671.0)
+- Move NanaZip console version to NanaZip.Core project. (Not used in NanaZip
+  MSIX package because we need to release the next preview to contain the
+  CVE-2024-11477 fix in NanaZip 3.1.)
+- Remove C++/WinRT dependency for NanaZip.Codecs and NanaZip.Frieren.
+- Add GetDpiForWindowWrapper for NanaZip.Frieren.DarkMode to fix the legacy
+  Windows compatibility issues.
+- Remove VC-LTL dependency for the Self Extracting Executables related projects.
+- Adjust the compilation configurations to optimize the binary size for the Self
+  Extracting Executables.
+- Use Mile.Windows.UniCrt (https://github.com/ProjectMile/Mile.Windows.UniCrt)
+  instead of VC-LTL.
+- Update NanaZip.Specification.SevenZip header file.
+- Start to simplify the NanaZip specific decoders and encoders implementation.
+- Synchronize the BLAKE3 implementation to 1.5.5.
+  (https://github.com/BLAKE3-team/BLAKE3/releases/tag/1.5.5)
+- Synchronize the RHash implementation to the latest master branch which is
+  after v1.4.5.
+  (https://github.com/rhash/RHash/commit/cf2adf22ae7c39d9b8e5e7b87222046a8f42b3dc)
+- Enable disabling child process creation for NanaZip Self Extracting
+  Executables. (Except installer mode of Self Extracting Executables, which
+  compiled binaries is not provided in the NanaZip MSIX package.)
+
+**NanaZip 3.5 Preview 0 (3.5.1000.0)**
+
+This release includes all the improvements from NanaZip 3.0 Update 1
+(3.0.1000.0).
+
+**NanaZip 3.5 Preview 0 (3.5.996.0)**
+
+This release includes all the improvements from NanaZip 3.0 (3.0.996.0).
+
 **NanaZip 3.0 Preview 0 (3.0.756.0)**
 
 - Rewrite and split the implementation of the Core Library and the Self
@@ -27,13 +117,13 @@ For stable versions, please read [NanaZip Release Notes](ReleaseNotes.md).
   (https://github.com/ProjectMile/Mile.Windows.Helpers/commit/b522a956f7dd42dc205869d362f96a777bcb2aa0)
 - Update Mile.Xaml to 2.1.661.
   (https://github.com/ProjectMile/Mile.Xaml/releases/tag/2.1.661.0)
-- Update russian translation. (Contributed by Blueberryy.）
+- Update russian translation. (Contributed by Blueberryy.)
 - Fix the text wrapping issue in the About dialog. (Thanks to MenschenToaster.)
 - Use modern IFileDialog for folder picker dialog. (Contributed by 
-  reflectronic.）
+  reflectronic.)
 - Launch directly to the settings page of association for NanaZip. (Contributed
-  by AndromedaMelody.）
-- Show NanaZip in Drives' ContextMenu. (Contributed by AndromedaMelody.）
+  by AndromedaMelody.)
+- Show NanaZip in Drives' ContextMenu. (Contributed by AndromedaMelody.)
 - Sync file extension support from https://github.com/mcmilk/7-Zip-zstd.
 - Add other methods to compression dialog.
   (https://github.com/mcmilk/7-Zip-zstd/commit/cf29d0c1babcd5ddf2c67eda8bb36e11f9c643b9)

@@ -15,7 +15,7 @@
 #include <Windows.h>
 
 EXTERN_C BOOL WINAPI NanaZipEnableMitigations();
-EXTERN_C BOOL WINAPI NanaZipThreadDynamicCodeAllow();
 EXTERN_C BOOL WINAPI NanaZipDisableChildProcesses();
+EXTERN_C BOOL WINAPI NanaZipSetThreadDynamicCodeOptout(BOOL optout);
 
 #endif // !NANAZIP_SHARED_MITIGATIONS
